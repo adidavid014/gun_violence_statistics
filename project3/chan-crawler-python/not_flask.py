@@ -8,7 +8,7 @@ import psycopg2
 import os
 from dash.dependencies import Input, Output
 
-# Initialize the Dash application
+
 app = dash.Dash(__name__)
 
 db_uri_chan = 'postgresql://postgres:testpassword@postgres:5432/chan_crawler'
@@ -60,16 +60,6 @@ def refresh_everything() :
 subreddit_list = []
 board_list = []
 
-#totals_list = refresh_everything()
-'''
-data = pd.DataFrame({
-    'Category': ['Gunpride', 'Toxic', 'Toxic Gunpride'] * 2,
-    'Percentage': totals_list,
-    'Group': ['Reddit'] * 3 + ['4chan'] * 3
-})
-
-pivot_data = data.pivot(index='Category', columns='Group', values='Percentage').reset_index()
-'''
 subreddit_options = [
     {'label': 'guns', 'value': 'guns'},
     {'label': 'progun', 'value': 'progun'},
@@ -125,13 +115,11 @@ def update_lists(subreddits_selected, boards_selected):
     global boards_list
     subreddit_list = subreddits_selected
     boards_list = boards_selected
-    #print(subreddit_list)
-    #print(boards_list)
     return None
 
 @app.callback(
-    [Output('totals_graph', 'figure'), Output('individuals_graph', 'figure')],  # Update the children of the output-div
-    [Input('refresh-button', 'n_clicks')]   # Listen to the 'n_clicks' of 'my-button'
+    [Output('totals_graph', 'figure'), Output('individuals_graph', 'figure')],
+    [Input('refresh-button', 'n_clicks')]
 )
 def button_clicked(n_clicks):
     totals_list = refresh_everything()
@@ -141,8 +129,7 @@ def button_clicked(n_clicks):
         'Percentage': totals_list,
         'Group': ['Reddit'] * 3 + ['4chan'] * 3
     })
-
-    # We need to pivot data differently
+    
     pivot_data_totals = data_totals.pivot(index='Group', columns='Category', values='Percentage').reset_index()
 
     figure_totals = {
@@ -165,7 +152,6 @@ def button_clicked(n_clicks):
             numbers_items.append(get_percentages_reddit(subreddit))
         for board in boards_list :
             numbers_items.append(get_percentages_chan(board))
-        #print(numbers_tuples)
 
         if len(numbers_items) > 0 :
             figure_individuals = {
@@ -184,10 +170,8 @@ def button_clicked(n_clicks):
             }
         else:
             figure_individuals = {'data': [], 'layout': {'title': 'Individual Subreddit and Board Analysis'}}
-
         return figure_totals, figure_individuals
     else:
-        
         return figure_totals, {'data': [], 'layout': {'title': 'Individual Subreddit and Board Analysis'}}
 
 def get_percentages_reddit(subreddit) :
@@ -212,8 +196,6 @@ def get_percentages_reddit(subreddit) :
 
     value = [subreddit, gunpride_percentage, toxic_percentage, toxic_gunpride_percentage]
 
-    #print(f"value: {value}")
-
     return value
 
 
@@ -234,14 +216,10 @@ def get_percentages_chan(board) :
 
     value = [board, gunpride_percentage, toxic_percentage, toxic_gunpride_percentage]
 
-    #print(f"value: {value}")
-
     return value
 
-# Run the app
+# run the app
 if __name__ == '__main__':
-    #get_percentages_chan('pol')
-    #get_percentages_reddit('gunpolitics')
     app.run_server(debug=True, host='0.0.0.0', port=80)
     
 
