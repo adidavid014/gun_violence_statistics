@@ -1,0 +1,8 @@
+###### Requirements with Version Specifiers ######
+python-dotenv ~= 1.0
+faktory ~= 1.0
+requests ~= 2.31
+psycopg2-binary ~= 2.9
+dash ~= 2.14.2
+pandas ~= 2.1.3
+sqlalchemy ~= 2.0
