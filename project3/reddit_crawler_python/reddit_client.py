@@ -3,8 +3,8 @@ import logging
 import time
 from datetime import datetime, timedelta
 
-# client id - _GpFjBtOXm8fys150GVlHg
-# secret - 26OQ4qGAbZMiVw3xv1AYD9ahj_YJyg
+# client id - xxxxxxxxxxxxxxx
+# secret - xxxxxxxxxxxxxxx
 
 ''' Client class - the reddit client that will make the calls to the API '''
 class Client:
@@ -75,7 +75,7 @@ class Client:
     ''' Establishing the initial OAuth connection, will be called again if token expires for some reason '''
     def setup_OAuth(self):
         print('setting up OAuth')
-        client_auth = requests.auth.HTTPBasicAuth('_GpFjBtOXm8fys150GVlHg', '26OQ4qGAbZMiVw3xv1AYD9ahj_YJyg')
+        # client_auth = requests.auth.HTTPBasicAuth('_GpFjBtOXm8fys150GVlHg', '26OQ4qGAbZMiVw3xv1AYD9ahj_YJyg')
         post_data = {"grant_type": "password", "username": "TEAM_BRANDON", "password": "fuckthe2a"}
         headers = {"User-Agent": "team_brandon_app:v1.0.0 by /u/TEAM_BRANDON;"}
         response = requests.post("https://www.reddit.com/api/v1/access_token", auth=client_auth, data=post_data, headers=headers)
